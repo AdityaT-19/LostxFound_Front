@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "813269010576",
+    "project_id": "lostxfound",
+    "storage_bucket": "lostxfound.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813269010576:android:cf4ebd48c7e6796bb4f015",
+        "android_client_info": {
+          "package_name": "com.example.lostxfound_front"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxEopDXabsq2jDy61KJDuYsmph03NUdMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

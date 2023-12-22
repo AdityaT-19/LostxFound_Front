@@ -1,20 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:lostxfound_front/firebase_options.dart';
 
-void main() => runApp(GetMaterialApp(home: Home()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
+}
 
-class Home extends StatelessWidget {
-  var count = 0.obs;
-
-  Home({super.key});
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
   @override
-  Widget build(context) => Scaffold(
-      appBar: AppBar(title: Text("counter")),
-      body: Center(
-        child: Obx(() => Text("$count")),
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'LostXFound',
+      theme: ThemeData().copyWith(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.orange,
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => count++,
-      ));
+    );
+  }
 }
