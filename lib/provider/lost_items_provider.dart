@@ -76,6 +76,19 @@ class LostItemsAllProvider extends StateNotifier<List<LostItem>> {
     }
     state = loadedLostItems;
   }
+
+  void updateLostItem(int lid, String prop, dynamic val) async {
+    final unvid = 1;
+    final url = Uri.parse('http://localhost:3000/$unvid/lostitems/$lid');
+    final data = {prop: val};
+    final response = await http.patch(url, body: jsonEncode(data), headers: {
+      'Content-Type': 'application/json',
+    });
+    final extractedData = response.body;
+    final decodedData = jsonDecode(extractedData);
+    final newLostItem = LostItem.fromJson(decodedData);
+    state = state.map((e) => e.lid == lid ? newLostItem : e).toList();
+  }
 }
 
 final lostItemsAllProvider =
