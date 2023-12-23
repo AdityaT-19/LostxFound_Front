@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:lostxfound_front/provider/found_item_provider.dart';
+import 'package:lostxfound_front/screens/found_item_details.dart';
 
 class FoundItemsScreen extends ConsumerStatefulWidget {
   const FoundItemsScreen({super.key});
@@ -43,6 +44,10 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
       );
     }
 
+    void _onTapFoundItem(int index) {
+      Get.to(() => FoundItemDetails(index: index));
+    }
+
     final foundItems = ref.watch(foundItemsAllProvider);
     return Scaffold(
       appBar: AppBar(
@@ -69,6 +74,7 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
             ),
             title: Text(foundItem.fname),
             trailing: Text(foundItem.uid),
+            onTap: () => _onTapFoundItem(index),
           );
         },
       ),

@@ -20,3 +20,7 @@ class UserProvider extends StateNotifier<User?> {
     state = newUser;
   }
 }
+
+final userProvider = StateNotifierProvider<UserProvider, User?>(
+  (ref) => UserProvider(),
+);

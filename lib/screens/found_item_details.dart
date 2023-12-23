@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:lostxfound_front/provider/found_item_provider.dart';
 import 'package:lostxfound_front/provider/lost_items_provider.dart';
 
-class LostItemDetails extends ConsumerStatefulWidget {
-  const LostItemDetails({required this.index, super.key});
+class FoundItemDetails extends ConsumerStatefulWidget {
+  const FoundItemDetails({required this.index, super.key});
   final int index;
   @override
-  ConsumerState<LostItemDetails> createState() => _LostItemDetailsState();
+  ConsumerState<FoundItemDetails> createState() => _FoundItemDetailsState();
 }
 
-class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
+class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
   @override
   Widget build(BuildContext context) {
-    final lostitem = ref.watch(lostItemsAllProvider)[widget.index];
+    final founditem = ref.watch(foundItemsAllProvider)[widget.index];
     late ImageProvider imageProvider;
     imageProvider = const AssetImage('assets/images/placeholder.png');
     try {
@@ -23,20 +24,7 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(lostitem.lname),
-        actions: [
-          //if (lostitem.uid == ref.read(userProvider)!.uid)
-          if (lostitem.uid == "01JCE21CS001")
-            IconButton(
-              onPressed: () {
-                ref
-                    .read(lostItemsAllProvider.notifier)
-                    .removeLostItem(lostitem);
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.delete),
-            ),
-        ],
+        title: Text(founditem.fname),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -60,7 +48,7 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   title: Text("name"),
                 ),
                 Text(
-                  lostitem.lname,
+                  founditem.fname,
                 ),
               ],
             ),
@@ -74,7 +62,7 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   title: Text("description"),
                 ),
                 Text(
-                  lostitem.ldescription,
+                  founditem.fdescription,
                 ),
               ],
             ),
@@ -88,7 +76,7 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   title: Text("uid"),
                 ),
                 Text(
-                  lostitem.uid,
+                  founditem.uid,
                 ),
               ],
             ),
@@ -102,7 +90,7 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   title: Text("student name"),
                 ),
                 Text(
-                  lostitem.sname,
+                  founditem.sname,
                 ),
               ],
             ),
@@ -115,7 +103,7 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   leading: Icon(Icons.date_range),
                   title: Text("Date"),
                 ),
-                Text(DateFormat.yMMMMEEEEd().format(lostitem.ldate)),
+                Text(DateFormat.yMMMMEEEEd().format(founditem.fdate)),
               ],
             ),
             const SizedBox(
@@ -125,31 +113,16 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               children: [
                 const ListTile(
                   leading: Icon(Icons.location_on),
-                  title: Text("Probable Locations"),
+                  title: Text("Location"),
                 ),
-                if (lostitem.probablyLost != null &&
-                    lostitem.probablyLost!.isNotEmpty)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: lostitem.probablyLost!.length,
-                    itemBuilder: (context, index) {
-                      final probableLocation = lostitem.probablyLost![index];
-                      return ListTile(
-                        title: ListTile(
-                          title:
-                              Text("Building Name : ${probableLocation.bname}"),
-                          subtitle: Text("Floor : ${probableLocation.floor}"),
-                        ),
-                        subtitle: Text(
-                            "Description : ${probableLocation.locdesc ?? "--"}"),
-                        trailing: Text(probableLocation.aname),
-                      );
-                    },
-                  )
-                else
-                  const ListTile(
-                    title: Text("None"),
+                ListTile(
+                  title: ListTile(
+                    title: Text("Building Name : ${founditem.location.bname}"),
+                    subtitle: Text("Floor : ${founditem.location.floor}"),
                   ),
+                  subtitle: Text("Description : ${founditem.location.locdesc}"),
+                  trailing: Text(founditem.location.aname),
+                )
               ],
             ),
           ],
