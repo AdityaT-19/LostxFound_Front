@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:lostxfound_front/firebase_options.dart';
+import 'package:lostxfound_front/screens/found_items_screen.dart';
+import 'package:lostxfound_front/screens/lost_items_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,7 @@ class App extends StatelessWidget {
           seedColor: Colors.orange,
         ),
       ),
+      home: const FoundItemsScreen(),
     );
   }
 }

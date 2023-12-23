@@ -14,7 +14,7 @@ class FoundItemsAllProvider extends StateNotifier<List<FoundItem>> {
     final unvid = 1;
     final uid = "01JCE21CS001";
     final url =
-        Uri.parse('http://localhost:3000/$unvid/founditems/lostitems/$uid');
+        Uri.parse('http://10.0.2.2:3000/$unvid/founditems/lostitems/$uid');
     final response = await http.get(url);
     final List<FoundItem> loadedFoundItems = [];
     final extractedData = response.body;
@@ -30,7 +30,7 @@ class FoundItemsAllProvider extends StateNotifier<List<FoundItem>> {
   void fetchAndSetFoundItemsByUser() async {
     final unvid = 1;
     final uid = "01JCE21CS001";
-    final url = Uri.parse('http://localhost:3000/$unvid/founditems/user/$uid');
+    final url = Uri.parse('http://10.0.2.2:3000/$unvid/founditems/user/$uid');
     final response = await http.get(url);
     final List<FoundItem> loadedFoundItems = [];
     final extractedData = response.body;
@@ -45,7 +45,7 @@ class FoundItemsAllProvider extends StateNotifier<List<FoundItem>> {
 
   void addFoundItem(FoundItemIns foundItem) async {
     final unvid = 1;
-    final url = Uri.parse('http://localhost:3000/$unvid/founditems');
+    final url = Uri.parse('http://10.0.2.2:3000/$unvid/founditems');
     final data = foundItem.toJson();
 
     final response = await http.post(url, body: (data), headers: {

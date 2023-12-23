@@ -12,7 +12,7 @@ class UserProvider extends StateNotifier<User?> {
   void fetchAndSetUser() async {
     final unvid = 1;
     final uid = "01JCE21CS001";
-    final url = Uri.parse('http://localhost:3000/$unvid/users/$uid');
+    final url = Uri.parse('http://10.0.2.2:3000/$unvid/users/$uid');
     final response = await http.get(url);
     final extractedData = response.body;
     final decodedData = jsonDecode(extractedData);
