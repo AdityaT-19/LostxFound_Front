@@ -14,13 +14,22 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
   @override
   Widget build(BuildContext context) {
     final lostitem = ref.watch(lostItemsAllProvider)[widget.index];
-    late ImageProvider imageProvider;
-    imageProvider = const AssetImage('assets/images/placeholder.png');
+    Image image;
+
     try {
-      //imageProvider = NetworkImage(lostitem.liimage);
+      // Check if the URL starts with http or https
+      if (lostitem.liimage.startsWith('http') ||
+          lostitem.liimage.startsWith('https')) {
+        image = Image.network(lostitem.liimage);
+      } else {
+        // Treat it as a local asset
+        throw ArgumentError('Invalid network URL: ${lostitem.liimage}');
+      }
     } catch (e) {
-      imageProvider = const AssetImage('assets/images/placeholder.png');
+      print('Error loading image: $e');
+      image = Image.asset('assets/images/placeholder.png');
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(lostitem.lname),
@@ -45,9 +54,8 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
             Container(
               alignment: Alignment.center,
               child: CircleAvatar(
-                child: Image(
-                  image: imageProvider,
-                ),
+                child: image,
+                radius: 100,
               ),
             ),
             const SizedBox(

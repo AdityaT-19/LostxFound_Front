@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:lostxfound_front/provider/found_item_provider.dart';
+import 'package:lostxfound_front/screens/found_item_add.dart';
 import 'package:lostxfound_front/screens/found_item_details.dart';
+import 'package:lostxfound_front/widgets/expandable_fab.dart';
 
 class FoundItemsScreen extends ConsumerStatefulWidget {
   const FoundItemsScreen({super.key});
@@ -53,24 +55,46 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
       appBar: AppBar(
         title: const Text('Found Items'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onPressedFloatButton,
-        child: const Icon(Icons.filter_alt_rounded),
+      floatingActionButton: ExpandableFab(
+        distance: 112,
+        children: [
+          ActionButton(
+            onPressed: () {
+              _onPressedFloatButton();
+            },
+            icon: const Icon(Icons.filter_alt),
+          ),
+          ActionButton(
+            onPressed: () {
+              Get.to(() => const AddFoundItem());
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: foundItems.length,
         itemBuilder: (context, index) {
           final foundItem = foundItems[index];
-          ImageProvider imageProvider =
-              const AssetImage('assets/images/placeholder.png');
+          Image image;
+
           try {
-            //imageProvider = NetworkImage(foundItem.liimage);
+            // Check if the URL starts with http or https
+            if (foundItem.fimage.startsWith('http') ||
+                foundItem.fimage.startsWith('https')) {
+              image = Image.network(foundItem.fimage);
+            } else {
+              // Treat it as a local asset
+              throw ArgumentError('Invalid network URL: ${foundItem.fimage}');
+            }
           } catch (e) {
-            imageProvider = const AssetImage('assets/images/placeholder.png');
+            print('Error loading image: $e');
+            image = Image.asset('assets/images/placeholder.png');
           }
+
           return ListTile(
             leading: CircleAvatar(
-              child: Image(image: imageProvider),
+              child: image,
             ),
             title: Text(foundItem.fname),
             trailing: Text(foundItem.uid),

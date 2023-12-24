@@ -14,17 +14,25 @@ class FoundItemDetails extends ConsumerStatefulWidget {
 class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
   @override
   Widget build(BuildContext context) {
-    final founditem = ref.watch(foundItemsAllProvider)[widget.index];
-    late ImageProvider imageProvider;
-    imageProvider = const AssetImage('assets/images/placeholder.png');
+    final foundItem = ref.watch(foundItemsAllProvider)[widget.index];
+    Image image;
+
     try {
-      //imageProvider = NetworkImage(lostitem.liimage);
+      // Check if the URL starts with http or https
+      if (foundItem.fimage.startsWith('http') ||
+          foundItem.fimage.startsWith('https')) {
+        image = Image.network(foundItem.fimage);
+      } else {
+        // Treat it as a local asset
+        throw ArgumentError('Invalid network URL: ${foundItem.fimage}');
+      }
     } catch (e) {
-      imageProvider = const AssetImage('assets/images/placeholder.png');
+      print('Error loading image: $e');
+      image = Image.asset('assets/images/placeholder.png');
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(founditem.fname),
+        title: Text(foundItem.fname),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -33,9 +41,7 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
             Container(
               alignment: Alignment.center,
               child: CircleAvatar(
-                child: Image(
-                  image: imageProvider,
-                ),
+                child: image,
               ),
             ),
             const SizedBox(
@@ -48,7 +54,7 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
                   title: Text("name"),
                 ),
                 Text(
-                  founditem.fname,
+                  foundItem.fname,
                 ),
               ],
             ),
@@ -62,7 +68,7 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
                   title: Text("description"),
                 ),
                 Text(
-                  founditem.fdescription,
+                  foundItem.fdescription,
                 ),
               ],
             ),
@@ -76,7 +82,7 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
                   title: Text("uid"),
                 ),
                 Text(
-                  founditem.uid,
+                  foundItem.uid,
                 ),
               ],
             ),
@@ -90,7 +96,7 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
                   title: Text("student name"),
                 ),
                 Text(
-                  founditem.sname,
+                  foundItem.sname,
                 ),
               ],
             ),
@@ -103,7 +109,7 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
                   leading: Icon(Icons.date_range),
                   title: Text("Date"),
                 ),
-                Text(DateFormat.yMMMMEEEEd().format(founditem.fdate)),
+                Text(DateFormat.yMMMMEEEEd().format(foundItem.fdate)),
               ],
             ),
             const SizedBox(
@@ -117,11 +123,11 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
                 ),
                 ListTile(
                   title: ListTile(
-                    title: Text("Building Name : ${founditem.location.bname}"),
-                    subtitle: Text("Floor : ${founditem.location.floor}"),
+                    title: Text("Building Name : ${foundItem.location.bname}"),
+                    subtitle: Text("Floor : ${foundItem.location.floor}"),
                   ),
-                  subtitle: Text("Description : ${founditem.location.locdesc}"),
-                  trailing: Text(founditem.location.aname),
+                  subtitle: Text("Description : ${foundItem.location.locdesc}"),
+                  trailing: Text(foundItem.location.aname),
                 )
               ],
             ),
