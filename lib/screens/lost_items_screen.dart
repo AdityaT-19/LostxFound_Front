@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:lostxfound_front/provider/lost_items_provider.dart';
+import 'package:lostxfound_front/provider/user_provider.dart';
 import 'package:lostxfound_front/screens/lost_item_add.dart';
 import 'package:lostxfound_front/screens/lost_item_details.dart';
+import 'package:lostxfound_front/screens/splash_screen.dart';
 import 'package:lostxfound_front/widgets/expandable_fab.dart';
 import 'package:lostxfound_front/widgets/locations_list.dart';
 
@@ -17,6 +19,10 @@ class LostItemsScreen extends ConsumerStatefulWidget {
 class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(userProvider) == null) {
+      return const SplashScreen();
+    }
+    final uid = ref.watch(userProvider)!.uid;
     void _onPressedFloatButton() {
       Get.dialog(
         AlertDialog(
@@ -37,7 +43,7 @@ class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
                 onPressed: () {
                   ref
                       .read(lostItemsAllProvider.notifier)
-                      .fetchLostItemsByUser("01JCE21CS001");
+                      .fetchLostItemsByUser(uid);
                   Get.back();
                 },
               ),

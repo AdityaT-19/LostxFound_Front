@@ -24,9 +24,9 @@ class User {
       sname: json['sname'],
       email: json['email'],
       address: json['address'],
-      phone: json['phone'],
-      lostitems: json['lostitems'],
-      founditems: json['founditems'],
+      phone: json['phno'],
+      lostitems: json['lostcount'],
+      founditems: json['foundcount'],
     );
   }
 }

@@ -29,7 +29,7 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
   late String ldescription;
   String? liimage;
   DateTime ldate = DateTime.now();
-  String uid = "01JCE21CS001";
+  late String uid;
   List<LostLocationIns>? probabilyLostLocation;
 
   final imgPicker = ImagePicker();
@@ -125,6 +125,8 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+    uid = user!.uid;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Lost Item'),

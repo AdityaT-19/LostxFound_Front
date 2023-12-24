@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:lostxfound_front/provider/found_item_provider.dart';
+import 'package:lostxfound_front/provider/user_provider.dart';
 import 'package:lostxfound_front/screens/found_item_add.dart';
 import 'package:lostxfound_front/screens/found_item_details.dart';
+import 'package:lostxfound_front/screens/splash_screen.dart';
 import 'package:lostxfound_front/widgets/expandable_fab.dart';
 
 class FoundItemsScreen extends ConsumerStatefulWidget {
@@ -14,8 +16,21 @@ class FoundItemsScreen extends ConsumerStatefulWidget {
 }
 
 class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
+  bool _isByUser = false;
+  @override
+  void initState() {
+    ref
+        .read(foundItemsAllProvider.notifier)
+        .fetchAndSetFoundItemsByLostItems(ref.read(userProvider)!.uid);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+    if (user == null) {
+      return const SplashScreen();
+    }
     void _onPressedFloatButton() {
       Get.dialog(
         AlertDialog(
@@ -27,7 +42,8 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
                 onPressed: () {
                   ref
                       .read(foundItemsAllProvider.notifier)
-                      .fetchAndSetFoundItemsByLostItems();
+                      .fetchAndSetFoundItemsByLostItems(user!.uid);
+                  _isByUser = false;
                   Get.back();
                 },
               ),
@@ -36,7 +52,8 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
                 onPressed: () {
                   ref
                       .read(foundItemsAllProvider.notifier)
-                      .fetchAndSetFoundItemsByUser();
+                      .fetchAndSetFoundItemsByUser(user!.uid);
+                  _isByUser = true;
                   Get.back();
                 },
               ),
@@ -64,12 +81,13 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
             },
             icon: const Icon(Icons.filter_alt),
           ),
-          ActionButton(
-            onPressed: () {
-              Get.to(() => const AddFoundItem());
-            },
-            icon: const Icon(Icons.add),
-          ),
+          if (_isByUser)
+            ActionButton(
+              onPressed: () {
+                Get.to(() => const AddFoundItem());
+              },
+              icon: const Icon(Icons.add),
+            ),
         ],
       ),
       body: ListView.builder(

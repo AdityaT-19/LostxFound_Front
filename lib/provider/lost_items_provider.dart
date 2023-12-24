@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:lostxfound_front/constants/url.dart';
 import 'package:lostxfound_front/models/lost_item.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +13,7 @@ class LostItemsAllProvider extends StateNotifier<List<LostItem>> {
 
   void fetchAndSetLostItems() async {
     final unvid = 1;
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/lostitems');
+    final url = Uri.parse('$URL/$unvid/lostitems');
     final response = await http.get(url);
     final List<LostItem> loadedLostItems = [];
     final extractedData = response.body;
@@ -27,7 +28,7 @@ class LostItemsAllProvider extends StateNotifier<List<LostItem>> {
 
   void addLostItem(LostItemIns lostItem) async {
     final unvid = 1;
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/lostitems');
+    final url = Uri.parse('$URL/$unvid/lostitems');
     final data = lostItem.toJson();
 
     final response = await http.post(url, body: (data), headers: {
@@ -41,15 +42,14 @@ class LostItemsAllProvider extends StateNotifier<List<LostItem>> {
 
   void removeLostItem(LostItem lostItem) async {
     final univid = 1;
-    final url =
-        Uri.parse('http://10.0.2.2:3000/$univid/lostitems/${lostItem.lid}');
+    final url = Uri.parse('$URL/$univid/lostitems/${lostItem.lid}');
     final response = await http.delete(url);
     state = state.where((element) => element.lid != lostItem.lid).toList();
   }
 
   void fetchLostItemsByUser(String uid) async {
     final unvid = 1;
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/lostitems/user/$uid');
+    final url = Uri.parse('$URL/$unvid/lostitems/user/$uid');
     final response = await http.get(url);
     final List<LostItem> loadedLostItems = [];
     final extractedData = response.body;
@@ -64,7 +64,7 @@ class LostItemsAllProvider extends StateNotifier<List<LostItem>> {
 
   void fetchRecentLostItems() async {
     final unvid = 1;
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/lostitems/recent');
+    final url = Uri.parse('$URL/$unvid/lostitems/recent');
     final response = await http.get(url);
     final List<LostItem> loadedLostItems = [];
     final extractedData = response.body;
@@ -79,9 +79,9 @@ class LostItemsAllProvider extends StateNotifier<List<LostItem>> {
 
   void updateLostItem(int lid, String prop, dynamic val) async {
     final unvid = 1;
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/lostitems/$lid');
+    final url = Uri.parse('$URL/$unvid/lostitems/$lid');
     final data = {prop: val};
-    final response = await http.patch(url, body: jsonEncode(data), headers: {
+    final response = await http.put(url, body: jsonEncode(data), headers: {
       'Content-Type': 'application/json',
     });
     final extractedData = response.body;

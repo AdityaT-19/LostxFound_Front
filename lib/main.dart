@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:lostxfound_front/firebase_options.dart';
 import 'package:lostxfound_front/screens/found_item_add.dart';
 import 'package:lostxfound_front/screens/found_items_screen.dart';
+import 'package:lostxfound_front/screens/home_screen.dart';
+import 'package:lostxfound_front/screens/login_screen.dart';
 import 'package:lostxfound_front/screens/lost_item_add.dart';
 import 'package:lostxfound_front/screens/lost_items_screen.dart';
+import 'package:lostxfound_front/widgets/stream_builder_for_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +34,7 @@ class App extends StatelessWidget {
           seedColor: Colors.orange,
         ),
       ),
-      home: const FoundItemsScreen(),
+      home: const InitialStreamBuilder(),
     );
   }
 }

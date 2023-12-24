@@ -1,20 +1,17 @@
 import 'dart:convert';
 
+import 'package:lostxfound_front/constants/url.dart';
 import 'package:lostxfound_front/models/found_items.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FoundItemsAllProvider extends StateNotifier<List<FoundItem>> {
-  FoundItemsAllProvider() : super([]) {
-    fetchAndSetFoundItemsByLostItems();
-  }
+  FoundItemsAllProvider() : super([]);
 
-  void fetchAndSetFoundItemsByLostItems() async {
+  void fetchAndSetFoundItemsByLostItems(String uid) async {
     final unvid = 1;
-    final uid = "01JCE21CS001";
-    final url =
-        Uri.parse('http://10.0.2.2:3000/$unvid/founditems/lostitems/$uid');
+    final url = Uri.parse('$URL/$unvid/founditems/lostitems/$uid');
     final response = await http.get(url);
     final List<FoundItem> loadedFoundItems = [];
     final extractedData = response.body;
@@ -27,10 +24,9 @@ class FoundItemsAllProvider extends StateNotifier<List<FoundItem>> {
     state = loadedFoundItems;
   }
 
-  void fetchAndSetFoundItemsByUser() async {
+  void fetchAndSetFoundItemsByUser(String uid) async {
     final unvid = 1;
-    final uid = "01JCE21CS001";
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/founditems/user/$uid');
+    final url = Uri.parse('$URL/$unvid/founditems/user/$uid');
     final response = await http.get(url);
     final List<FoundItem> loadedFoundItems = [];
     final extractedData = response.body;
@@ -45,7 +41,7 @@ class FoundItemsAllProvider extends StateNotifier<List<FoundItem>> {
 
   void addFoundItem(FoundItemIns foundItem) async {
     final unvid = 1;
-    final url = Uri.parse('http://10.0.2.2:3000/$unvid/founditems');
+    final url = Uri.parse('$URL/$unvid/founditems');
     final data = foundItem.toJson();
     final response = await http.post(url, body: (data), headers: {
       'Content-Type': 'application/json',

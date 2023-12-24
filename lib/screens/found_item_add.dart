@@ -27,7 +27,7 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
   DateTime? fdate;
   late int locid;
   late String locdesc;
-  String uid = "01JCE21CS001";
+  late String uid;
 
   final imgPicker = ImagePicker();
   final firebaseStorage = FirebaseStorage.instance;
@@ -122,6 +122,8 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+    uid = user!.uid;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Found Item'),
