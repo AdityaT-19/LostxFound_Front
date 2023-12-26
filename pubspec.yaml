@@ -45,6 +45,7 @@ dependencies:
   firebase_auth: ^4.15.3
   shared_preferences: ^2.2.2
   google_fonts: ^6.1.0
+  liquid_pull_to_refresh: ^3.0.1
 
 dev_dependencies:
   flutter_test:

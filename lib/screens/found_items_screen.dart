@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:lostxfound_front/provider/found_item_provider.dart';
 import 'package:lostxfound_front/provider/user_provider.dart';
 import 'package:lostxfound_front/screens/found_item_add.dart';
@@ -93,58 +94,71 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
             ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: foundItems.length,
-        itemBuilder: (context, index) {
-          final foundItem = foundItems[index];
-          Image image;
-
-          try {
-            // Check if the URL starts with http or https
-            if (foundItem.fimage.startsWith('http') ||
-                foundItem.fimage.startsWith('https')) {
-              image = Image.network(foundItem.fimage);
-            } else {
-              // Treat it as a local asset
-              throw ArgumentError('Invalid network URL: ${foundItem.fimage}');
-            }
-          } catch (e) {
-            print('Error loading image: $e');
-            image = Image.asset('assets/images/placeholder.png');
+      body: LiquidPullToRefresh(
+        onRefresh: () async {
+          if (_isByUser) {
+            ref
+                .read(foundItemsAllProvider.notifier)
+                .fetchAndSetFoundItemsByUser(user!.uid);
+          } else {
+            ref
+                .read(foundItemsAllProvider.notifier)
+                .fetchAndSetFoundItemsByLostItems(user!.uid);
           }
-
-          return Card(
-            clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.all(10),
-            color: Colors.white,
-            elevation: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Hero(
-                  tag: image,
-                  child: Image(
-                    image: image.image,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                ListTile(
-                  title: Text(foundItem.fname,
-                      style: Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
-                  tileColor: Colors.transparent,
-                  subtitle: Text(foundItem.uid),
-                  style: ListTileStyle.drawer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  onTap: () => _onTapFoundItem(index),
-                ),
-              ],
-            ),
-          );
         },
+        child: ListView.builder(
+          itemCount: foundItems.length,
+          itemBuilder: (context, index) {
+            final foundItem = foundItems[index];
+            Image image;
+
+            try {
+              // Check if the URL starts with http or https
+              if (foundItem.fimage.startsWith('http') ||
+                  foundItem.fimage.startsWith('https')) {
+                image = Image.network(foundItem.fimage);
+              } else {
+                // Treat it as a local asset
+                throw ArgumentError('Invalid network URL: ${foundItem.fimage}');
+              }
+            } catch (e) {
+              print('Error loading image: $e');
+              image = Image.asset('assets/images/placeholder.png');
+            }
+
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              margin: const EdgeInsets.all(10),
+              color: Colors.white,
+              elevation: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Hero(
+                    tag: image,
+                    child: Image(
+                      image: image.image,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(foundItem.fname,
+                        style: Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
+                    tileColor: Colors.transparent,
+                    subtitle: Text(foundItem.uid),
+                    style: ListTileStyle.drawer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    onTap: () => _onTapFoundItem(index),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

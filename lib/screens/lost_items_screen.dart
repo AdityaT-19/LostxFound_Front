@@ -8,6 +8,7 @@ import 'package:lostxfound_front/screens/lost_item_details.dart';
 import 'package:lostxfound_front/screens/splash_screen.dart';
 import 'package:lostxfound_front/widgets/expandable_fab.dart';
 import 'package:lostxfound_front/widgets/locations_list.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class LostItemsScreen extends ConsumerStatefulWidget {
   const LostItemsScreen({super.key});
@@ -83,58 +84,63 @@ class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
           ActionButton(icon: Icon(Icons.add), onPressed: _onTapAdd),
         ],
       ),
-      body: ListView.builder(
-        itemCount: ref.watch(lostItemsAllProvider).length,
-        itemBuilder: (context, index) {
-          final lostItem = lostItems[index];
-          Image image;
-
-          try {
-            // Check if the URL starts with http or https
-            if (lostItem.liimage.startsWith('http') ||
-                lostItem.liimage.startsWith('https')) {
-              image = Image.network(lostItem.liimage);
-            } else {
-              // Treat it as a local asset
-              throw ArgumentError('Invalid network URL: ${lostItem.liimage}');
-            }
-          } catch (e) {
-            print('Error loading image: $e');
-            image = Image.asset('assets/images/placeholder.png');
-          }
-
-          return Card(
-            clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.all(10),
-            color: Colors.white,
-            elevation: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Hero(
-                  tag: image,
-                  child: Image(
-                    image: image.image,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                ListTile(
-                  title: Text(lostItem.lname,
-                      style: Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
-                  tileColor: Colors.transparent,
-                  subtitle: Text(lostItem.uid),
-                  style: ListTileStyle.drawer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  onTap: () => _onTapLostItem(index),
-                ),
-              ],
-            ),
-          );
+      body: LiquidPullToRefresh(
+        onRefresh: () async {
+          ref.read(lostItemsAllProvider.notifier).fetchAndSetLostItems();
         },
+        child: ListView.builder(
+          itemCount: ref.watch(lostItemsAllProvider).length,
+          itemBuilder: (context, index) {
+            final lostItem = lostItems[index];
+            Image image;
+
+            try {
+              // Check if the URL starts with http or https
+              if (lostItem.liimage.startsWith('http') ||
+                  lostItem.liimage.startsWith('https')) {
+                image = Image.network(lostItem.liimage);
+              } else {
+                // Treat it as a local asset
+                throw ArgumentError('Invalid network URL: ${lostItem.liimage}');
+              }
+            } catch (e) {
+              print('Error loading image: $e');
+              image = Image.asset('assets/images/placeholder.png');
+            }
+
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              margin: const EdgeInsets.all(10),
+              color: Colors.white,
+              elevation: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Hero(
+                    tag: image,
+                    child: Image(
+                      image: image.image,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(lostItem.lname,
+                        style: Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
+                    tileColor: Colors.transparent,
+                    subtitle: Text(lostItem.uid),
+                    style: ListTileStyle.drawer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    onTap: () => _onTapLostItem(index),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
