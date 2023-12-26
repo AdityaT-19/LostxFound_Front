@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lostxfound_front/provider/found_item_provider.dart';
 import 'package:lostxfound_front/provider/lost_items_provider.dart';
@@ -31,105 +32,160 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
       image = Image.asset('assets/images/placeholder.png');
     }
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 212, 230, 247),
       appBar: AppBar(
         title: Text(foundItem.fname),
+        backgroundColor: const Color.fromARGB(255, 177, 232, 228),
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               alignment: Alignment.center,
               child: CircleAvatar(
-                child: image,
+                radius: 90,
+                backgroundColor: const Color.fromARGB(255, 177, 232, 228),
+                child: ClipOval(
+                  child: image,
+                ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.title),
-                  title: Text("name"),
-                ),
-                Text(
-                  foundItem.fname,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.description),
-                  title: Text("description"),
-                ),
-                Text(
-                  foundItem.fdescription,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.perm_identity),
-                  title: Text("uid"),
-                ),
-                Text(
-                  foundItem.uid,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.perm_identity),
-                  title: Text("student name"),
-                ),
-                Text(
-                  foundItem.sname,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.date_range),
-                  title: Text("Date"),
-                ),
-                Text(DateFormat.yMMMMEEEEd().format(foundItem.fdate)),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.location_on),
-                  title: Text("Location"),
-                ),
-                ListTile(
-                  title: ListTile(
-                    title: Text("Building Name : ${foundItem.location.bname}"),
-                    subtitle: Text("Floor : ${foundItem.location.floor}"),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.title),
+                    title: Text("Name"),
                   ),
-                  subtitle: Text("Description : ${foundItem.location.locdesc}"),
-                  trailing: Text(foundItem.location.aname),
-                )
-              ],
+                  Text(
+                    foundItem.fname,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.description),
+                    title: Text("Description"),
+                  ),
+                  Text(
+                    foundItem.fdescription,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.perm_identity),
+                    title: Text("UID"),
+                  ),
+                  Text(
+                    foundItem.uid,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.perm_identity),
+                    title: Text("Student Name"),
+                  ),
+                  Text(
+                    foundItem.sname,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.date_range),
+                    title: Text("Date"),
+                  ),
+                  Text(DateFormat.yMMMMEEEEd().format(foundItem.fdate)),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.location_on),
+                    title: Text("Location"),
+                  ),
+                  ListTile(
+                    title: ListTile(
+                      title: Text(
+                        "Building Name : ${foundItem.location.bname}",
+                        style: Get.textTheme.bodyMedium,
+                      ),
+                      subtitle: Text(
+                        "Floor : ${foundItem.location.floor}",
+                        style: Get.textTheme.bodyMedium,
+                      ),
+                    ),
+                    subtitle:
+                        Text("Description : ${foundItem.location.locdesc}"),
+                    trailing: Text(foundItem.location.aname),
+                  )
+                ],
+              ),
             ),
           ],
         ),

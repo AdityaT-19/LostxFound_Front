@@ -1,2 +1,2 @@
-const String URL = 'https://xml7jxcf-3000.inc1.devtunnels.ms';
+const String URL = 'https://newly-in-rat.ngrok-free.app';
 const String URL2 = 'http://10.0.2.2:3000';

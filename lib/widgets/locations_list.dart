@@ -39,20 +39,20 @@ class _LocationsListMultiSelectState
     void _showDescriptionDialog(Location location) async {
       Get.dialog(
         AlertDialog(
-          title: const Text("Enter description"),
+          title: const Text("Enter Description"),
           actions: [
             TextButton(
               onPressed: () {
                 selectedLocDecController[locations.indexOf(location)].clear();
                 Get.back();
               },
-              child: const Text('Continue without description'),
+              child: const Text('Continue Without Description'),
             ),
             TextButton(
               onPressed: () {
                 Get.back();
               },
-              child: const Text('Continue with description'),
+              child: const Text('Continue With Description'),
             ),
           ],
           content: Column(
@@ -92,7 +92,7 @@ class _LocationsListMultiSelectState
             }
             Get.back<List<LostLocationIns>>(result: selectedLocs);
           },
-          child: const Text('submit'),
+          child: const Text('Submit'),
         ),
       ],
       content: SingleChildScrollView(
@@ -106,15 +106,29 @@ class _LocationsListMultiSelectState
             colorText: Colors.white,
           ),
           columns: const [
-            DataColumn(label: Text('Building Name')),
-            DataColumn(label: Text('Floor')),
+            DataColumn(
+                label: Text(
+              'Building Name',
+              style: TextStyle(fontSize: 12),
+            )),
+            DataColumn(
+                label: Text(
+              'Floor',
+              style: TextStyle(fontSize: 12),
+            )),
           ],
           rows: locations
               .map(
                 (location) => DataRow(
                   cells: [
-                    DataCell(Text(location.bname)),
-                    DataCell(Text(location.floor.toString())),
+                    DataCell(Text(
+                      location.bname,
+                      style: const TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      location.floor.toString(),
+                      style: const TextStyle(fontSize: 10),
+                    )),
                   ],
                   selected: selectedindices[locations.indexOf(location)],
                   onSelectChanged: (bool? value) {

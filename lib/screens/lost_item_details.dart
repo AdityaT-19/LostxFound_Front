@@ -80,8 +80,14 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
     }
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 212, 230, 247),
       appBar: AppBar(
-        title: Text(lostitem.lname),
+        backgroundColor: const Color.fromARGB(255, 169, 190, 227),
+        title: Text(
+          lostitem.lname,
+          style: const TextStyle(color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
         actions: [
           //if (lostitem.uid == ref.read(userProvider)!.uid)
           if (lostitem.uid == uid)
@@ -100,12 +106,18 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             InkWell(
               child: Container(
                 alignment: Alignment.center,
                 child: CircleAvatar(
-                  child: image,
                   radius: 100,
+                  backgroundColor: Colors.transparent,
+                  child: ClipOval(
+                    child: image,
+                  ),
                 ),
               ),
             ),
@@ -118,20 +130,27 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   _onTapLostItemUpdate("lname");
                 }
               },
-              child: Column(
-                children: [
-                  const ListTile(
-                    leading: Icon(Icons.title),
-                    title: Text("name"),
-                  ),
-                  Text(
-                    lostitem.lname,
-                  ),
-                ],
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(255, 177, 232, 228),
+                ),
+                child: Column(
+                  children: [
+                    const ListTile(
+                      leading: Icon(Icons.title),
+                      title: Text("Name"),
+                    ),
+                    Text(
+                      lostitem.lname,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
             ),
             InkWell(
               onLongPress: () {
@@ -139,91 +158,127 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                   _onTapLostItemUpdate("ldescription");
                 }
               },
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(255, 177, 232, 228),
+                ),
+                child: Column(
+                  children: [
+                    const ListTile(
+                      leading: Icon(Icons.description),
+                      title: Text("Description"),
+                    ),
+                    Text(
+                      lostitem.ldescription,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
               child: Column(
                 children: [
                   const ListTile(
-                    leading: Icon(Icons.description),
-                    title: Text("description"),
+                    leading: Icon(Icons.perm_identity),
+                    title: Text("UID"),
                   ),
                   Text(
-                    lostitem.ldescription,
+                    lostitem.uid,
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.perm_identity),
-                  title: Text("uid"),
-                ),
-                Text(
-                  lostitem.uid,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.perm_identity),
-                  title: Text("student name"),
-                ),
-                Text(
-                  lostitem.sname,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.date_range),
-                  title: Text("Date"),
-                ),
-                Text(DateFormat.yMMMMEEEEd().format(lostitem.ldate)),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.location_on),
-                  title: Text("Probable Locations"),
-                ),
-                if (lostitem.probablyLost != null &&
-                    lostitem.probablyLost!.isNotEmpty)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: lostitem.probablyLost!.length,
-                    itemBuilder: (context, index) {
-                      final probableLocation = lostitem.probablyLost![index];
-                      return ListTile(
-                        title: ListTile(
-                          title:
-                              Text("Building Name : ${probableLocation.bname}"),
-                          subtitle: Text("Floor : ${probableLocation.floor}"),
-                        ),
-                        subtitle: Text(
-                            "Description : ${probableLocation.locdesc ?? "--"}"),
-                        trailing: Text(probableLocation.aname),
-                      );
-                    },
-                  )
-                else
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
                   const ListTile(
-                    title: Text("None"),
+                    leading: Icon(Icons.perm_identity),
+                    title: Text("Student Name"),
                   ),
-              ],
+                  Text(
+                    lostitem.sname,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.date_range),
+                    title: Text("Date"),
+                  ),
+                  Text(DateFormat.yMMMMEEEEd().format(lostitem.ldate)),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromARGB(255, 177, 232, 228),
+              ),
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.location_on),
+                    title: Text("Probable Locations"),
+                  ),
+                  if (lostitem.probablyLost != null &&
+                      lostitem.probablyLost!.isNotEmpty)
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: lostitem.probablyLost!.length,
+                      itemBuilder: (context, index) {
+                        final probableLocation = lostitem.probablyLost![index];
+                        return ListTile(
+                          title: ListTile(
+                            title: Text(
+                              "Building Name : ${probableLocation.bname}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            subtitle: Text("Floor : ${probableLocation.floor}"),
+                          ),
+                          subtitle: Text(
+                              "Description : ${probableLocation.locdesc ?? "--"}"),
+                          trailing: Text(probableLocation.aname),
+                        );
+                      },
+                    )
+                  else
+                    const ListTile(
+                      title: Text("None"),
+                    ),
+                ],
+              ),
             ),
           ],
         ),

@@ -22,26 +22,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('LostXFound'), actions: [
-        //logout
-        IconButton(
-          onPressed: () async {
-            final prefs = await SharedPreferences.getInstance();
-            prefs.remove('uid');
-            FirebaseAuth.instance.signOut();
-          },
-          icon: const Icon(Icons.logout),
-        ),
-      ]),
+      appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 236, 198, 4),
+          title: const Text('LostXFound'),
+          actions: [
+            //logout
+            IconButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                prefs.remove('uid');
+                FirebaseAuth.instance.signOut();
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ]),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromARGB(255, 193, 213, 246),
         items: const [
           BottomNavigationBarItem(
-            backgroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 236, 198, 4),
             icon: Icon(Icons.location_off_rounded),
             label: 'Lost',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 236, 198, 4),
             icon: Icon(Icons.location_on_rounded),
             label: 'Found',
           ),

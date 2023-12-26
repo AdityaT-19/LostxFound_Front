@@ -130,6 +130,7 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Lost Item'),
+        backgroundColor: const Color.fromARGB(255, 177, 232, 228),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -137,6 +138,9 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               Container(
                 alignment: Alignment.center,
                 child: CircleAvatar(
@@ -161,46 +165,51 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
                 children: [
                   const ListTile(
                     leading: Icon(Icons.title),
-                    title: Text("name"),
+                    title: Text("Name"),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a name';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        lname = value!;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a name';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      lname = value!;
-                    },
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Column(
                 children: [
                   const ListTile(
                     leading: Icon(Icons.description),
-                    title: Text("description"),
+                    title: Text("Description"),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a description';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        ldescription = value!;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a description';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      ldescription = value!;
-                    },
                   ),
                 ],
               ),
@@ -287,6 +296,9 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
                     },
                     child: const Text('Submit'),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             ],

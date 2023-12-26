@@ -69,8 +69,11 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
 
     final foundItems = ref.watch(foundItemsAllProvider);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: const Text('Found Items'),
+        centerTitle: true,
       ),
       floatingActionButton: ExpandableFab(
         distance: 112,
@@ -110,13 +113,36 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
             image = Image.asset('assets/images/placeholder.png');
           }
 
-          return ListTile(
-            leading: CircleAvatar(
-              child: image,
+          return Card(
+            clipBehavior: Clip.antiAlias,
+            margin: const EdgeInsets.all(10),
+            color: Colors.white,
+            elevation: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Hero(
+                  tag: image,
+                  child: Image(
+                    image: image.image,
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                ListTile(
+                  title: Text(foundItem.fname,
+                      style: Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
+                  tileColor: Colors.transparent,
+                  subtitle: Text(foundItem.uid),
+                  style: ListTileStyle.drawer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  onTap: () => _onTapFoundItem(index),
+                ),
+              ],
             ),
-            title: Text(foundItem.fname),
-            trailing: Text(foundItem.uid),
-            onTap: () => _onTapFoundItem(index),
           );
         },
       ),
