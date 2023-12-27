@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:lostxfound_front/constants/url.dart';
 import 'package:lostxfound_front/provider/lost_items_provider.dart';
 import 'package:lostxfound_front/provider/user_provider.dart';
 import 'package:lostxfound_front/screens/lost_item_add.dart';
@@ -9,6 +10,7 @@ import 'package:lostxfound_front/screens/splash_screen.dart';
 import 'package:lostxfound_front/widgets/expandable_fab.dart';
 import 'package:lostxfound_front/widgets/locations_list.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class LostItemsScreen extends ConsumerStatefulWidget {
   const LostItemsScreen({super.key});
@@ -18,6 +20,8 @@ class LostItemsScreen extends ConsumerStatefulWidget {
 }
 
 class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
+  bool _isByUser = false;
+
   @override
   Widget build(BuildContext context) {
     if (ref.watch(userProvider) == null) {
@@ -33,6 +37,7 @@ class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
               TextButton(
                 child: Text('All'),
                 onPressed: () {
+                  _isByUser = false;
                   ref
                       .read(lostItemsAllProvider.notifier)
                       .fetchAndSetLostItems();
@@ -42,6 +47,7 @@ class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
               TextButton(
                 child: Text('By User'),
                 onPressed: () {
+                  _isByUser = true;
                   ref
                       .read(lostItemsAllProvider.notifier)
                       .fetchLostItemsByUser(uid);
@@ -86,7 +92,11 @@ class _LostItemsScreenState extends ConsumerState<LostItemsScreen> {
       ),
       body: LiquidPullToRefresh(
         onRefresh: () async {
-          ref.read(lostItemsAllProvider.notifier).fetchAndSetLostItems();
+          if (_isByUser) {
+            ref.read(lostItemsAllProvider.notifier).fetchLostItemsByUser(uid);
+          } else {
+            ref.read(lostItemsAllProvider.notifier).fetchAndSetLostItems();
+          }
         },
         child: ListView.builder(
           itemCount: ref.watch(lostItemsAllProvider).length,
