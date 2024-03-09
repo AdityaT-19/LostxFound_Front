@@ -9,7 +9,7 @@ To install and run the Lost and Found application, follow these steps:
 1. Ensure you have Flutter installed on your system. If not, follow the official Flutter installation guide: [Flutter Installation Guide](https://flutter.dev/docs/get-started/install)
 2. Clone this repository to your local machine:
    ```
-   git clone https://github.com/your-username/lost-and-found.git
+   git clone https://github.com/AdityaT-19/LostxFound_Front.git
    ```
 3. Navigate to the project directory:
    ```
