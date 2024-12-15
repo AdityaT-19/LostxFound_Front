@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lostxfound_front/models/lost_item.dart';
 import 'package:lostxfound_front/provider/lost_items_provider.dart';
 import 'package:lostxfound_front/provider/user_provider.dart';
 
@@ -80,12 +79,12 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
     }
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 212, 230, 247),
+      backgroundColor: Get.theme.colorScheme.secondaryContainer,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 169, 190, 227),
+        backgroundColor: Get.theme.colorScheme.primary,
         title: Text(
           lostitem.lname,
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
         actions: [
@@ -110,13 +109,16 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               height: 20,
             ),
             InkWell(
-              child: Container(
-                alignment: Alignment.center,
-                child: CircleAvatar(
-                  radius: 100,
-                  backgroundColor: Colors.transparent,
-                  child: ClipOval(
-                    child: image,
+              child: Hero(
+                tag: lostitem.lid,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    radius: 100,
+                    backgroundColor: Colors.transparent,
+                    child: ClipOval(
+                      child: image,
+                    ),
                   ),
                 ),
               ),
@@ -134,16 +136,24 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                 margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(255, 177, 232, 228),
+                  color: Get.theme.colorScheme.primary,
                 ),
                 child: Column(
                   children: [
-                    const ListTile(
-                      leading: Icon(Icons.title),
-                      title: Text("Name"),
+                    ListTile(
+                      leading: const Icon(Icons.title, color: Colors.white),
+                      title: Text(
+                        "Name",
+                        style: Get.theme.textTheme.bodyLarge!.copyWith(
+                          color: Get.theme.colorScheme.onPrimary,
+                        ),
+                      ),
                     ),
                     Text(
                       lostitem.lname,
+                      style: Get.theme.textTheme.bodyMedium!.copyWith(
+                          color: Get.theme.colorScheme.primaryContainer,
+                          fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 10,
@@ -161,17 +171,23 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               child: Container(
                 margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(255, 177, 232, 228),
-                ),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Get.theme.colorScheme.primary),
                 child: Column(
                   children: [
-                    const ListTile(
-                      leading: Icon(Icons.description),
-                      title: Text("Description"),
+                    ListTile(
+                      leading: Icon(Icons.description, color: Colors.white),
+                      title: Text(
+                        "Description",
+                        style: Get.theme.textTheme.bodyLarge!
+                            .copyWith(color: Colors.white),
+                      ),
                     ),
                     Text(
                       lostitem.ldescription,
+                      style: Get.theme.textTheme.bodyMedium!.copyWith(
+                          color: Get.theme.colorScheme.primaryContainer,
+                          fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 10,
@@ -184,16 +200,24 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.perm_identity),
-                    title: Text("UID"),
-                  ),
+                  ListTile(
+                      leading: Icon(Icons.perm_identity, color: Colors.white),
+                      title: Text(
+                        "UID",
+                        style: Get.theme.textTheme.bodyLarge!.copyWith(
+                          color: Get.theme.colorScheme.onPrimary,
+                        ),
+                      )),
                   Text(
                     lostitem.uid,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                      color: Get.theme.colorScheme.primaryContainer,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -205,16 +229,24 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.perm_identity),
-                    title: Text("Student Name"),
+                  ListTile(
+                    leading: Icon(Icons.perm_identity, color: Colors.white),
+                    title: Text(
+                      "Student Name",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   Text(
                     lostitem.sname,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -226,15 +258,25 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.date_range),
-                    title: Text("Date"),
+                  ListTile(
+                    leading: Icon(Icons.date_range, color: Colors.white),
+                    title: Text(
+                      "Date",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
-                  Text(DateFormat.yMMMMEEEEd().format(lostitem.ldate)),
+                  Text(
+                    DateFormat.yMMMMEEEEd().format(lostitem.ldate),
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             ),
@@ -242,13 +284,18 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.location_on),
-                    title: Text("Probable Locations"),
+                  ListTile(
+                    leading: const Icon(Icons.location_on, color: Colors.white),
+                    title: Text(
+                      "Probable Locations",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   if (lostitem.probablyLost != null &&
                       lostitem.probablyLost!.isNotEmpty)
@@ -261,15 +308,29 @@ class _LostItemDetailsState extends ConsumerState<LostItemDetails> {
                           title: ListTile(
                             title: Text(
                               "Building Name : ${probableLocation.bname}",
-                              style: const TextStyle(
-                                fontSize: 18,
-                              ),
+                              style: Get.theme.textTheme.bodyMedium!.copyWith(
+                                  color: Get.theme.colorScheme.primaryContainer,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            subtitle: Text("Floor : ${probableLocation.floor}"),
+                            subtitle: Text(
+                              "Floor : ${probableLocation.floor}",
+                              style: Get.theme.textTheme.bodyMedium!.copyWith(
+                                  color: Get.theme.colorScheme.primaryContainer,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           subtitle: Text(
-                              "Description : ${probableLocation.locdesc ?? "--"}"),
-                          trailing: Text(probableLocation.aname),
+                            "Description : ${probableLocation.locdesc ?? "--"}",
+                            style: Get.theme.textTheme.bodyMedium!.copyWith(
+                                color: Get.theme.colorScheme.primaryContainer,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          trailing: Text(
+                            probableLocation.aname,
+                            style: Get.theme.textTheme.bodyMedium!.copyWith(
+                                color: Get.theme.colorScheme.primaryContainer,
+                                fontWeight: FontWeight.bold),
+                          ),
                         );
                       },
                     )

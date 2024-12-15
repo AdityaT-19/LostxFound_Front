@@ -4,13 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lostxfound_front/firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-import 'package:lostxfound_front/models/found_items.dart';
 import 'package:lostxfound_front/models/locations.dart';
 import 'package:lostxfound_front/models/lost_item.dart';
-import 'package:lostxfound_front/provider/found_item_provider.dart';
 import 'package:lostxfound_front/provider/lost_items_provider.dart';
 import 'package:lostxfound_front/provider/user_provider.dart';
 import 'package:lostxfound_front/widgets/locations_list.dart';
@@ -91,7 +87,10 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
                     }
                     Get.back();
                   },
-                  icon: const Icon(Icons.camera_alt),
+                  icon: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.black,
+                  ),
                 ),
                 const Text('Camera'),
               ],
@@ -112,7 +111,10 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
                     }
                     Get.back();
                   },
-                  icon: const Icon(Icons.photo),
+                  icon: const Icon(
+                    Icons.photo,
+                    color: Colors.black,
+                  ),
                 ),
                 const Text('Gallery'),
               ],
@@ -129,8 +131,12 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
     uid = user!.uid;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Lost Item'),
-        backgroundColor: const Color.fromARGB(255, 177, 232, 228),
+        title: const Text(
+          'Add Lost Item',
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Get.theme.colorScheme.primary,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -262,8 +268,9 @@ class _AddLostItemState extends ConsumerState<AddLostItem> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      final selectedLocs =
-                          await Get.dialog(const LocationsListMultiSelect());
+                      final selectedLocs = await Get.dialog(
+                        const LocationsListMultiSelect(),
+                      );
                       if (selectedLocs != null) {
                         setState(() {
                           probabilyLostLocation = selectedLocs;

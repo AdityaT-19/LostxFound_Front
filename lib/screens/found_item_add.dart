@@ -88,7 +88,10 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
                     }
                     Get.back();
                   },
-                  icon: const Icon(Icons.camera_alt),
+                  icon: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.black,
+                  ),
                 ),
                 const Text('Camera'),
               ],
@@ -109,7 +112,10 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
                     }
                     Get.back();
                   },
-                  icon: const Icon(Icons.photo),
+                  icon: const Icon(
+                    Icons.photo,
+                    color: Colors.black,
+                  ),
                 ),
                 const Text('Gallery'),
               ],
@@ -126,7 +132,12 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
     uid = user!.uid;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Found Item'),
+        title: const Text(
+          'Add Found Item',
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Get.theme.colorScheme.primary,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -134,6 +145,9 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 alignment: Alignment.center,
                 child: CircleAvatar(
@@ -160,21 +174,24 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
                 children: [
                   const ListTile(
                     leading: Icon(Icons.title),
-                    title: Text("name"),
+                    title: Text("Name"),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a name';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        fname = value!;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a name';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      fname = value!;
-                    },
                   ),
                 ],
               ),
@@ -185,21 +202,24 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
                 children: [
                   const ListTile(
                     leading: Icon(Icons.description),
-                    title: Text("description"),
+                    title: Text("Description"),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a description';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        fdescription = value!;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a description';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      fdescription = value!;
-                    },
                   ),
                 ],
               ),
@@ -241,19 +261,22 @@ class _AddFoundItemState extends ConsumerState<AddFoundItem> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Location Description',
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Location Description',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a location description';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        locdesc = value!;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a location description';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      locdesc = value!;
-                    },
                   ),
                   const SizedBox(
                     height: 10,

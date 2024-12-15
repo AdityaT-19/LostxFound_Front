@@ -39,21 +39,21 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextButton(
-                child: Text('By Lost Items'),
+                child: const Text('By Lost Items'),
                 onPressed: () {
                   ref
                       .read(foundItemsAllProvider.notifier)
-                      .fetchAndSetFoundItemsByLostItems(user!.uid);
+                      .fetchAndSetFoundItemsByLostItems(user.uid);
                   _isByUser = false;
                   Get.back();
                 },
               ),
               TextButton(
-                child: Text('By User'),
+                child: const Text('By User'),
                 onPressed: () {
                   ref
                       .read(foundItemsAllProvider.notifier)
-                      .fetchAndSetFoundItemsByUser(user!.uid);
+                      .fetchAndSetFoundItemsByUser(user.uid);
                   _isByUser = true;
                   Get.back();
                 },
@@ -99,11 +99,11 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
           if (_isByUser) {
             ref
                 .read(foundItemsAllProvider.notifier)
-                .fetchAndSetFoundItemsByUser(user!.uid);
+                .fetchAndSetFoundItemsByUser(user.uid);
           } else {
             ref
                 .read(foundItemsAllProvider.notifier)
-                .fetchAndSetFoundItemsByLostItems(user!.uid);
+                .fetchAndSetFoundItemsByLostItems(user.uid);
           }
         },
         child: ListView.builder(
@@ -122,39 +122,44 @@ class _FoundItemsScreenState extends ConsumerState<FoundItemsScreen> {
                 throw ArgumentError('Invalid network URL: ${foundItem.fimage}');
               }
             } catch (e) {
-              print('Error loading image: $e');
+              debugPrint('Error loading image: $e');
               image = Image.asset('assets/images/placeholder.png');
             }
 
-            return Card(
-              clipBehavior: Clip.antiAlias,
-              margin: const EdgeInsets.all(10),
-              color: Colors.white,
-              elevation: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Hero(
-                    tag: image,
-                    child: Image(
-                      image: image.image,
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
+            return InkWell(
+              onTap: () {
+                _onTapFoundItem(index);
+              },
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                margin: const EdgeInsets.all(10),
+                color: Colors.white,
+                elevation: 3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Hero(
+                      tag: foundItem.fid,
+                      child: Image(
+                        image: image.image,
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
-                  ListTile(
-                    title: Text(foundItem.fname,
-                        style: Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
-                    tileColor: Colors.transparent,
-                    subtitle: Text(foundItem.uid),
-                    style: ListTileStyle.drawer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                    ListTile(
+                      title: Text(foundItem.fname,
+                          style:
+                              Get.textTheme.bodyLarge!.copyWith(fontSize: 20)),
+                      tileColor: Colors.transparent,
+                      subtitle: Text(foundItem.uid),
+                      style: ListTileStyle.drawer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
-                    onTap: () => _onTapFoundItem(index),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

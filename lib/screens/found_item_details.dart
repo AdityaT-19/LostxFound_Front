@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lostxfound_front/provider/found_item_provider.dart';
-import 'package:lostxfound_front/provider/lost_items_provider.dart';
 
 class FoundItemDetails extends ConsumerStatefulWidget {
   const FoundItemDetails({required this.index, super.key});
@@ -32,10 +31,14 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
       image = Image.asset('assets/images/placeholder.png');
     }
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 212, 230, 247),
+      backgroundColor: Get.theme.colorScheme.primaryContainer,
       appBar: AppBar(
-        title: Text(foundItem.fname),
-        backgroundColor: const Color.fromARGB(255, 177, 232, 228),
+        title: Text(
+          foundItem.fname,
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Get.theme.colorScheme.primary,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -44,13 +47,16 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: CircleAvatar(
-                radius: 90,
-                backgroundColor: const Color.fromARGB(255, 177, 232, 228),
-                child: ClipOval(
-                  child: image,
+            Hero(
+              tag: foundItem.fid,
+              child: Container(
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  radius: 90,
+                  backgroundColor: Get.theme.colorScheme.primary,
+                  child: ClipOval(
+                    child: image,
+                  ),
                 ),
               ),
             ),
@@ -58,16 +64,24 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.title),
-                    title: Text("Name"),
+                  ListTile(
+                    leading: Icon(Icons.title, color: Colors.white),
+                    title: Text(
+                      "Name",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   Text(
                     foundItem.fname,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -79,16 +93,24 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.description),
-                    title: Text("Description"),
+                  ListTile(
+                    leading: Icon(Icons.description, color: Colors.white),
+                    title: Text(
+                      "Description",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   Text(
                     foundItem.fdescription,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -100,16 +122,27 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.perm_identity),
-                    title: Text("UID"),
+                  ListTile(
+                    leading: Icon(
+                      Icons.perm_identity,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      "UID",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   Text(
                     foundItem.uid,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -121,16 +154,27 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.perm_identity),
-                    title: Text("Student Name"),
+                  ListTile(
+                    leading: Icon(
+                      Icons.perm_identity,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      "Student Name",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   Text(
                     foundItem.sname,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -142,15 +186,28 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.date_range),
-                    title: Text("Date"),
+                  ListTile(
+                    leading: Icon(
+                      Icons.date_range,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      "Date",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
-                  Text(DateFormat.yMMMMEEEEd().format(foundItem.fdate)),
+                  Text(
+                    DateFormat.yMMMMEEEEd().format(foundItem.fdate),
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(
                     height: 10,
                   )
@@ -161,28 +218,49 @@ class _FoundItemDetailsState extends ConsumerState<FoundItemDetails> {
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 177, 232, 228),
+                color: Get.theme.colorScheme.primary,
               ),
               child: Column(
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.location_on),
-                    title: Text("Location"),
+                  ListTile(
+                    leading: Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      "Location",
+                      style: Get.theme.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                   ListTile(
                     title: ListTile(
                       title: Text(
                         "Building Name : ${foundItem.location.bname}",
-                        style: Get.textTheme.bodyMedium,
+                        style: Get.theme.textTheme.bodyMedium!.copyWith(
+                            color: Get.theme.colorScheme.primaryContainer,
+                            fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
                         "Floor : ${foundItem.location.floor}",
-                        style: Get.textTheme.bodyMedium,
+                        style: Get.theme.textTheme.bodyMedium!.copyWith(
+                            color: Get.theme.colorScheme.primaryContainer,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                    subtitle:
-                        Text("Description : ${foundItem.location.locdesc}"),
-                    trailing: Text(foundItem.location.aname),
+                    subtitle: Text(
+                      "Description : ${foundItem.location.locdesc}",
+                      style: Get.theme.textTheme.bodyMedium!.copyWith(
+                          color: Get.theme.colorScheme.primaryContainer,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    trailing: Text(
+                      foundItem.location.aname,
+                      style: Get.theme.textTheme.bodyMedium!.copyWith(
+                          color: Get.theme.colorScheme.primaryContainer,
+                          fontWeight: FontWeight.bold),
+                    ),
                   )
                 ],
               ),
